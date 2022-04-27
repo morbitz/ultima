@@ -8,6 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		646DFBE22815B2AA00DA1793 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFBE12815B2AA00DA1793 /* main.cpp */; };
+		646DFBEA2815B2E300DA1793 /* image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFBE82815B2E300DA1793 /* image.cpp */; };
+		646DFBED2815DA7400DA1793 /* texmap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFBEB2815DA7400DA1793 /* texmap.cpp */; };
+		646DFBF02815DAE600DA1793 /* ultima_types.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFBEE2815DAE600DA1793 /* ultima_types.cpp */; };
+		646DFBF3281615F300DA1793 /* artwork.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFBF1281615F300DA1793 /* artwork.cpp */; };
+		646DFBF628161A2400DA1793 /* uopfile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFBF428161A2400DA1793 /* uopfile.cpp */; };
+		646DFBF92816B72700DA1793 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 646DFBF82816B71D00DA1793 /* libz.tbd */; };
+		646DFBFC2816E44C00DA1793 /* gumpart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFBFA2816E44C00DA1793 /* gumpart.cpp */; };
+		646DFBFF2817063500DA1793 /* radarcolor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFBFD2817063500DA1793 /* radarcolor.cpp */; };
+		646DFC0228170ADE00DA1793 /* tileinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFC0028170ADE00DA1793 /* tileinfo.cpp */; };
+		646DFC0528172AE100DA1793 /* terrainblock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFC0328172AE100DA1793 /* terrainblock.cpp */; };
+		646DFC0828173F8100DA1793 /* uomap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFC0628173F8100DA1793 /* uomap.cpp */; };
+		646DFC0B28183F9300DA1793 /* artblock.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFC0928183F9300DA1793 /* artblock.cpp */; };
+		646DFC0E2818793800DA1793 /* multicollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFC0C2818793800DA1793 /* multicollection.cpp */; };
+		646DFC11281899BB00DA1793 /* lightmask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFC0F281899BB00DA1793 /* lightmask.cpp */; };
+		646DFC142818BFC300DA1793 /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFC122818BFC300DA1793 /* animation.cpp */; };
+		646DFC172819582600DA1793 /* huedata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 646DFC152819582600DA1793 /* huedata.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +41,38 @@
 /* Begin PBXFileReference section */
 		646DFBDE2815B2AA00DA1793 /* ultima */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ultima; sourceTree = BUILT_PRODUCTS_DIR; };
 		646DFBE12815B2AA00DA1793 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		646DFBE82815B2E300DA1793 /* image.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = image.cpp; sourceTree = "<group>"; };
+		646DFBE92815B2E300DA1793 /* image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
+		646DFBEB2815DA7400DA1793 /* texmap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = texmap.cpp; sourceTree = "<group>"; };
+		646DFBEC2815DA7400DA1793 /* texmap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = texmap.hpp; sourceTree = "<group>"; };
+		646DFBEE2815DAE600DA1793 /* ultima_types.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ultima_types.cpp; sourceTree = "<group>"; };
+		646DFBEF2815DAE600DA1793 /* ultima_types.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ultima_types.hpp; sourceTree = "<group>"; };
+		646DFBF1281615F300DA1793 /* artwork.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = artwork.cpp; sourceTree = "<group>"; };
+		646DFBF2281615F300DA1793 /* artwork.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = artwork.hpp; sourceTree = "<group>"; };
+		646DFBF428161A2400DA1793 /* uopfile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = uopfile.cpp; sourceTree = "<group>"; };
+		646DFBF528161A2400DA1793 /* uopfile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = uopfile.hpp; sourceTree = "<group>"; };
+		646DFBF82816B71D00DA1793 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		646DFBFA2816E44C00DA1793 /* gumpart.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = gumpart.cpp; sourceTree = "<group>"; };
+		646DFBFB2816E44C00DA1793 /* gumpart.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = gumpart.hpp; sourceTree = "<group>"; };
+		646DFBFD2817063500DA1793 /* radarcolor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = radarcolor.cpp; sourceTree = "<group>"; };
+		646DFBFE2817063500DA1793 /* radarcolor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = radarcolor.hpp; sourceTree = "<group>"; };
+		646DFC0028170ADE00DA1793 /* tileinfo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tileinfo.cpp; sourceTree = "<group>"; };
+		646DFC0128170ADE00DA1793 /* tileinfo.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = tileinfo.hpp; sourceTree = "<group>"; };
+		646DFC0328172AE100DA1793 /* terrainblock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = terrainblock.cpp; sourceTree = "<group>"; };
+		646DFC0428172AE100DA1793 /* terrainblock.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = terrainblock.hpp; sourceTree = "<group>"; };
+		646DFC0628173F8100DA1793 /* uomap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = uomap.cpp; sourceTree = "<group>"; };
+		646DFC0728173F8100DA1793 /* uomap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = uomap.hpp; sourceTree = "<group>"; };
+		646DFC0928183F9300DA1793 /* artblock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = artblock.cpp; sourceTree = "<group>"; };
+		646DFC0A28183F9300DA1793 /* artblock.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = artblock.hpp; sourceTree = "<group>"; };
+		646DFC0C2818793800DA1793 /* multicollection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = multicollection.cpp; sourceTree = "<group>"; };
+		646DFC0D2818793800DA1793 /* multicollection.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = multicollection.hpp; sourceTree = "<group>"; };
+		646DFC0F281899BB00DA1793 /* lightmask.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lightmask.cpp; sourceTree = "<group>"; };
+		646DFC10281899BB00DA1793 /* lightmask.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lightmask.hpp; sourceTree = "<group>"; };
+		646DFC122818BFC300DA1793 /* animation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = animation.cpp; sourceTree = "<group>"; };
+		646DFC132818BFC300DA1793 /* animation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = animation.hpp; sourceTree = "<group>"; };
+		646DFC152819582600DA1793 /* huedata.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = huedata.cpp; sourceTree = "<group>"; };
+		646DFC162819582600DA1793 /* huedata.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = huedata.hpp; sourceTree = "<group>"; };
+		646DFC182819A32800DA1793 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				646DFBF92816B72700DA1793 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,8 +90,10 @@
 		646DFBD52815B2AA00DA1793 = {
 			isa = PBXGroup;
 			children = (
+				646DFC182819A32800DA1793 /* .gitignore */,
 				646DFBE02815B2AA00DA1793 /* ultima */,
 				646DFBDF2815B2AA00DA1793 /* Products */,
+				646DFBF72816B71D00DA1793 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,8 +109,46 @@
 			isa = PBXGroup;
 			children = (
 				646DFBE12815B2AA00DA1793 /* main.cpp */,
+				646DFBF428161A2400DA1793 /* uopfile.cpp */,
+				646DFBF528161A2400DA1793 /* uopfile.hpp */,
+				646DFBE82815B2E300DA1793 /* image.cpp */,
+				646DFBE92815B2E300DA1793 /* image.hpp */,
+				646DFBEB2815DA7400DA1793 /* texmap.cpp */,
+				646DFBEC2815DA7400DA1793 /* texmap.hpp */,
+				646DFBF1281615F300DA1793 /* artwork.cpp */,
+				646DFBF2281615F300DA1793 /* artwork.hpp */,
+				646DFBEE2815DAE600DA1793 /* ultima_types.cpp */,
+				646DFBEF2815DAE600DA1793 /* ultima_types.hpp */,
+				646DFBFA2816E44C00DA1793 /* gumpart.cpp */,
+				646DFBFB2816E44C00DA1793 /* gumpart.hpp */,
+				646DFBFD2817063500DA1793 /* radarcolor.cpp */,
+				646DFBFE2817063500DA1793 /* radarcolor.hpp */,
+				646DFC0028170ADE00DA1793 /* tileinfo.cpp */,
+				646DFC0128170ADE00DA1793 /* tileinfo.hpp */,
+				646DFC0328172AE100DA1793 /* terrainblock.cpp */,
+				646DFC0428172AE100DA1793 /* terrainblock.hpp */,
+				646DFC0928183F9300DA1793 /* artblock.cpp */,
+				646DFC0A28183F9300DA1793 /* artblock.hpp */,
+				646DFC0628173F8100DA1793 /* uomap.cpp */,
+				646DFC0728173F8100DA1793 /* uomap.hpp */,
+				646DFC0C2818793800DA1793 /* multicollection.cpp */,
+				646DFC0D2818793800DA1793 /* multicollection.hpp */,
+				646DFC0F281899BB00DA1793 /* lightmask.cpp */,
+				646DFC10281899BB00DA1793 /* lightmask.hpp */,
+				646DFC122818BFC300DA1793 /* animation.cpp */,
+				646DFC132818BFC300DA1793 /* animation.hpp */,
+				646DFC152819582600DA1793 /* huedata.cpp */,
+				646DFC162819582600DA1793 /* huedata.hpp */,
 			);
 			path = ultima;
+			sourceTree = "<group>";
+		};
+		646DFBF72816B71D00DA1793 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				646DFBF82816B71D00DA1793 /* libz.tbd */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +179,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastUpgradeCheck = 1330;
+				ORGANIZATIONNAME = "Charles Kerr";
 				TargetAttributes = {
 					646DFBDD2815B2AA00DA1793 = {
 						CreatedOnToolsVersion = 13.3.1;
@@ -119,7 +209,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				646DFBFF2817063500DA1793 /* radarcolor.cpp in Sources */,
+				646DFC142818BFC300DA1793 /* animation.cpp in Sources */,
+				646DFC0E2818793800DA1793 /* multicollection.cpp in Sources */,
+				646DFC0228170ADE00DA1793 /* tileinfo.cpp in Sources */,
 				646DFBE22815B2AA00DA1793 /* main.cpp in Sources */,
+				646DFBFC2816E44C00DA1793 /* gumpart.cpp in Sources */,
+				646DFBF02815DAE600DA1793 /* ultima_types.cpp in Sources */,
+				646DFBF628161A2400DA1793 /* uopfile.cpp in Sources */,
+				646DFC172819582600DA1793 /* huedata.cpp in Sources */,
+				646DFBF3281615F300DA1793 /* artwork.cpp in Sources */,
+				646DFC0B28183F9300DA1793 /* artblock.cpp in Sources */,
+				646DFC0528172AE100DA1793 /* terrainblock.cpp in Sources */,
+				646DFC0828173F8100DA1793 /* uomap.cpp in Sources */,
+				646DFBEA2815B2E300DA1793 /* image.cpp in Sources */,
+				646DFC11281899BB00DA1793 /* lightmask.cpp in Sources */,
+				646DFBED2815DA7400DA1793 /* texmap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
