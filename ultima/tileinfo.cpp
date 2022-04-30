@@ -157,8 +157,8 @@ auto tileinfo::processArt(std::ifstream &input) ->void {
 			input.read(reinterpret_cast<char*>(&value8),1);
 			info.hue = static_cast<int>(value8);
 			//stacking offset
-			input.read(reinterpret_cast<char*>(&value8),1);
-			info.stackingOffset = static_cast<int>(value8);
+			input.read(reinterpret_cast<char*>(&value16),2);
+			info.stackingOffset = static_cast<int>(value16);
 			// value
 			input.read(reinterpret_cast<char*>(&value8),1);
 			info.value = static_cast<int>(value8);
