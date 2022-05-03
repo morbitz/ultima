@@ -28,13 +28,14 @@
 using namespace std::string_literals;
 
 int main(int argc, const char * argv[]) {
-	
 	auto rvalue = EXIT_FAILURE ;
 	if (argc >=3) {
 		rvalue = EXIT_SUCCESS;
 		
 		auto uodir = std::filesystem::path(std::string(argv[1]));
 		auto datadir = std::filesystem::path(std::string(argv[2]));
+		
+		
 		auto lightdir = datadir / std::filesystem::path("lights");
 		auto animdir = datadir / std::filesystem::path("animation");
 		auto lightMask = lightmask(uodir) ;
@@ -76,8 +77,8 @@ int main(int argc, const char * argv[]) {
 			}
 
 		}
-		return 0 ;
-		/*
+		
+		
 		auto artWork = artwork(uodir) ;
 		auto path = datadir / std::filesystem::path("terrain") ;
 		for (auto &entry : artWork.images(tiletype_t::terrain)){
@@ -96,7 +97,7 @@ int main(int argc, const char * argv[]) {
 			auto output = std::ofstream((path / std::filesystem::path(std::to_string(entry.first))).string()+".bmp"s,std::ios::binary);
 			entry.second.saveBMP(output,true) ;
 		}
-		*/
+		
 	}
 	return rvalue ;
 }

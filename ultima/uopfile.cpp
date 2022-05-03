@@ -7,6 +7,156 @@
 #include <cmath>
 
 using namespace std::string_literals;
+
+//===========================================================
+// uopindex_t
+//===========================================================
+//===========================================================
+auto uopindex_t::hashLittle2(const std::string& s) ->std::uint64_t{
+	std::uint32_t length = static_cast<std::uint32_t>(s.size()) ;
+	std::uint32_t a ;
+	std::uint32_t b ;
+	std::uint32_t c ;
+	
+	c = 0xDEADBEEF + static_cast<std::uint32_t>(length) ;
+	a = c;
+	b = c ;
+	int k = 0 ;
+	
+	while (length > 12){
+		a += (s[k]);
+		a += (s[k+1] << 8);
+		a += (s[k+2] << 16);
+		a += (s[k+3] << 24);
+		b += (s[k+4]);
+		b += (s[k+5] << 8);
+		b += (s[k+6] << 16);
+		b += (s[k+7] << 24);
+		c += (s[k+8]);
+		c += (s[k+9] << 8);
+		c += (s[k+10] << 16);
+		c += (s[k+11] << 24);
+		
+		a -= c; a ^= c << 4 | c >> 28; c += b;
+		b -= a; b ^= a << 6 | a >> 26; a += c;
+		c -= b; c ^= b << 8 | b >> 24; b += a;
+		a -= c; a ^= c << 16 | c >> 16; c += b;
+		b -= a; b ^= a << 19 | a >> 13; a += c;
+		c -= b; c ^= b << 4 | b >> 28; b += a;
+		
+		length -= 12 ;
+		k += 12;
+	}
+	
+	if (length != 0){
+		// Notice the lack of breaks!  we actually want it to fall through
+		switch (length) {
+			case 12:
+				c += (s[k+11] << 24);
+				[[fallthrough]];
+			case 11:
+				c += (s[k+10] << 16);
+				[[fallthrough]];
+			case 10:
+				c += (s[k+9] << 8);
+				[[fallthrough]];
+			case 9:
+				c += (s[k+8]);
+				[[fallthrough]];
+			case 8:
+				b += (s[k+7] << 24);
+				[[fallthrough]];
+			case 7:
+				b += (s[k+6] << 16);
+				[[fallthrough]];
+			case 6:
+				b += (s[k+5] << 8);
+				[[fallthrough]];
+			case 5:
+				b += (s[k+4]);
+				[[fallthrough]];
+			case 4:
+				a += (s[k+3] << 24);
+				[[fallthrough]];
+			case 3:
+				a += (s[k+2] << 16);
+				[[fallthrough]];
+			case 2:
+				a += (s[k+1] << 8);
+				[[fallthrough]];
+			case 1: {
+				a += (s[k]);
+				c ^= b;
+				c -= (b << 14) | (b >> 18);
+				a ^= c;
+				a -= (c << 11) | (c >> 21);
+				b ^= a;
+				b -= (a << 25) | (a >> 7);
+				c ^= b;
+				c -= (b << 16) | (b >> 16);
+				a ^= c;
+				a -= (c << 4)  | (c >> 28);
+				b ^= a;
+				b -= (a << 14) | (a >> 18);
+				c ^= b;
+				c -= (b << 24) | (b >> 8);
+				break;
+			}
+				
+			default:
+				break;
+		}
+		
+	}
+	
+	return (static_cast<std::uint64_t>(b) << 32) | static_cast<std::uint64_t>(c) ;
+
+}
+//===========================================================
+auto uopindex_t::hashAdler32(const std::vector<std::uint8_t> &data) ->std::uint32_t {
+	std::uint32_t a = 1 ;
+	std::uint32_t b = 0 ;
+	for (const auto &entry : data ) {
+		a = (a + static_cast<std::uint32_t>(entry)) % 65521;
+		b = (b + a) % 65521 ;
+	}
+	return (b<<16)| a ;
+
+}
+	
+//===========================================================
+auto uopindex_t::load(const std::string &hashstring, size_t max_index) ->void{
+	hashes.clear();
+	hashes.reserve(max_index);
+	if (!hashstring.empty() && (max_index>0)){
+		for (size_t i=0 ; i<= max_index;i++){
+			auto formatted = format(hashstring, i);
+			hashes.push_back(hashLittle2(formatted));
+		}
+	}
+}
+//===========================================================
+uopindex_t::uopindex_t(const std::string &hashstring, size_t max_index){
+	if (!hashstring.empty() && (max_index!=0)) {
+		load(hashstring,max_index);
+	}
+}
+//===========================================================
+auto uopindex_t::operator[](std::uint64_t hash) const -> std::size_t{
+	auto iter = std::find(hashes.cbegin(),hashes.cend(),hash);
+	if (iter != hashes.cend()){
+		return std::distance(hashes.cbegin(), iter);
+	}
+	return std::numeric_limits<std::size_t>::max();
+
+}
+//===========================================================
+auto uopindex_t::clear() ->void {
+	hashes.clear();
+}
+
+
+
 //=========================================================
 // table_entry
 //=========================================================
@@ -76,129 +226,6 @@ auto uopfile::zcompress(const std::vector<uint8_t> &source) const ->std::vector<
 	return rdata;
 }
 
-/************************************************************************
- Hash routines
- ***********************************************************************/
-
-//=============================================================================
-auto uopfile::hashLittle2(const std::string& s) ->std::uint64_t  {
-	
-	std::uint32_t length = static_cast<std::uint32_t>(s.size()) ;
-	std::uint32_t a ;
-	std::uint32_t b ;
-	std::uint32_t c ;
-	
-	c = 0xDEADBEEF + static_cast<std::uint32_t>(length) ;
-	a = c;
-	b = c ;
-	int k = 0 ;
-	
-	while (length > 12){
-		a += (s[k]);
-		a += (s[k+1] << 8);
-		a += (s[k+2] << 16);
-		a += (s[k+3] << 24);
-		b += (s[k+4]);
-		b += (s[k+5] << 8);
-		b += (s[k+6] << 16);
-		b += (s[k+7] << 24);
-		c += (s[k+8]);
-		c += (s[k+9] << 8);
-		c += (s[k+10] << 16);
-		c += (s[k+11] << 24);
-		
-		a -= c; a ^= c << 4 | c >> 28; c += b;
-		b -= a; b ^= a << 6 | a >> 26; a += c;
-		c -= b; c ^= b << 8 | b >> 24; b += a;
-		a -= c; a ^= c << 16 | c >> 16; c += b;
-		b -= a; b ^= a << 19 | a >> 13; a += c;
-		c -= b; c ^= b << 4 | b >> 28; b += a;
-		
-		length -= 12 ;
-		k += 12;
-	}
-	
-	if (length != 0){
-		// Notice the lack of breaks!  we actually want it to fall through
-		switch (length) {
-			case 12:
-				c += (s[k+11] << 24);
-				[[fallthrough]];
-			case 11:
-				c += (s[k+10] << 16);
-				[[fallthrough]];
-			case 10:
-				c += (s[k+9] << 8);
-				[[fallthrough]];
-			case 9:
-				c += (s[k+8]);
-				[[fallthrough]];
-			case 8:
-				b += (s[k+7] << 24);
-				[[fallthrough]];
-			case 7:
-				b += (s[k+6] << 16);
-				[[fallthrough]];
-			case 6:
-				b += (s[k+5] << 8);
-				[[fallthrough]];
-			case 5:
-				b += (s[k+4]);
-			case 4:
-				a += (s[k+3] << 24);
-				[[fallthrough]];
-			case 3:
-				a += (s[k+2] << 16);
-				[[fallthrough]];
-			case 2:
-				a += (s[k+1] << 8);
-				[[fallthrough]];
-			case 1: {
-				a += (s[k]);
-				c ^= b; c -= b << 14 | b >> 18;
-				a ^= c; a -= c << 11 | c >> 21;
-				b ^= a; b -= a << 25 | a >> 7;
-				c ^= b; c -= b << 16 | b >> 16;
-				a ^= c; a -= c << 4 | c >> 28;
-				b ^= a; b -= a << 14 | a >> 18;
-				c ^= b; c -= b << 24 | b >> 8;
-				break;
-			}
-				
-			default:
-				break;
-		}
-		
-	}
-	
-	return (static_cast<std::uint64_t>(b) << 32) | static_cast<std::uint64_t>(c) ;
-}
-
-//=============================================================================
-auto uopfile::hashAdler32(const std::vector<std::uint8_t> &data) ->std::uint32_t {
-	std::uint32_t a = 1 ;
-	std::uint32_t b = 0 ;
-	for (const auto &entry : data ) {
-		a = (a + static_cast<std::uint32_t>(entry)) % 65521;
-		b = (b + a) % 65521 ;
-	}
-	return (b<<16)| a ;
-}
-//===============================================================
-auto uopfile::hashLittleFor(const std::string &hashstring, std::size_t index) const ->std::uint64_t{
-	auto formatted = format(hashstring, index);
-	
-	return hashLittle2(formatted);
-}
-//===============================================================
-auto uopfile::findIndex(const std::vector<std::uint64_t> &hashdata, std::uint64_t hash) ->std::size_t{
-	auto iter = std::find(hashdata.cbegin(),hashdata.cend(),hash);
-	if (iter != hashdata.cend()){
-		return std::distance(hashdata.cbegin(), iter);
-		
-	}
-	return std::numeric_limits<std::size_t>::max();
-}
 
 //=============================================================================
 auto uopfile::isUOP(const std::string &filepath) const ->bool {
@@ -219,18 +246,6 @@ auto uopfile::isUOP(const std::string &filepath) const ->bool {
 	
 }
 
-//===============================================================
-auto uopfile::buildIndexHashes(const std::string &hashformat, std::size_t max_index) ->std::vector<std::uint64_t>{
-	std::vector<std::uint64_t> hashstorage ;
-	if (hashformat.empty()){
-		return std::vector<std::uint64_t>();
-	}
-	hashstorage.reserve(max_index+1);
-	for (auto i=0 ; i<= max_index;i++){
-		hashstorage.push_back(hashLittleFor(hashformat, i));
-	}
-	return hashstorage;
-}
 //===============================================================
 //===============================================================
 auto uopfile::nonIndexHash(std::uint64_t hash, std::size_t entry, std::vector<std::uint8_t> &data) ->bool{
@@ -255,8 +270,8 @@ auto uopfile::loadUOP(const std::string &filepath, std::size_t max_hashindex , c
 	if ((version > _uop_version) || (sig != _uop_identifer)){
 		return false ;
 	}
-	auto hashstorage1 = buildIndexHashes(hashformat1,max_hashindex);
-	auto hashstorage2 = buildIndexHashes(hashformat2, max_hashindex);
+	auto hashstorage1 = uopindex_t(hashformat1,max_hashindex);
+	auto hashstorage2 = uopindex_t(hashformat2,max_hashindex);
 	
 	std::uint64_t table_offset = 0;
 	std::uint32_t tablesize = 0 ;
@@ -298,10 +313,10 @@ auto uopfile::loadUOP(const std::string &filepath, std::size_t max_hashindex , c
 				// Can we find an index?
 				
 				
-				auto 	index = findIndex(hashstorage1, entry.identifer);
+				auto 	index = hashstorage1[entry.identifer];
 				if (index == std::numeric_limits<std::size_t>::max()){
 					
-					index = findIndex(hashstorage2, entry.identifer);
+					index = hashstorage2[entry.identifer];
 				}
 				if (index == std::numeric_limits<std::size_t>::max()){
 					
@@ -315,8 +330,6 @@ auto uopfile::loadUOP(const std::string &filepath, std::size_t max_hashindex , c
 		}
 		current_entry++ ;
 	}
-	_hash1.clear();
-	_hash2.clear();
 	return endUOPProcessing();
 }
 //==============================================================================
@@ -385,10 +398,10 @@ auto uopfile::writeUOP(const std::string &filepath) ->bool {
 			tables[data_entry].compressed_length = sizeOut ;
 			tables[data_entry].decompressed_length = sizeDecompressed ;
 			auto hashkey = writeHash(data_entry + i*table_size);
-			tables[data_entry].identifer =  hashLittle2(hashkey);
+			tables[data_entry].identifer =  uopindex_t::hashLittle2(hashkey);
 			
 			if (sizeDecompressed>0){
-				tables[data_entry].data_block_hash = hashAdler32(rawdata);
+				tables[data_entry].data_block_hash = uopindex_t::hashAdler32(rawdata);
 				// write out the data
 				output.write(reinterpret_cast<char*>(rawdata.data()),rawdata.size());
 			}

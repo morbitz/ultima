@@ -131,6 +131,44 @@
 
 #include <zlib.h>
 
+//===========================================================
+// uopindex_t
+//===========================================================
+//===========================================================
+struct uopindex_t {
+	std::vector<std::uint64_t> hashes ;
+	static auto hashLittle2(const std::string& s) ->std::uint64_t;
+	static auto hashAdler32(const std::vector<std::uint8_t> &data) ->std::uint32_t ;
+	
+	auto load(const std::string &hashstring, size_t max_index) ->void;
+	uopindex_t(const std::string &hashstring="", size_t max_index=0);
+	auto operator[](std::uint64_t hash) const -> size_t ;
+	auto clear() ->void ;
+	//==========================================================
+	// The source for this was found on StackOverflow at:
+	// https://stackoverflow.com/questions/2342162/stdstring-formatting-like-sprintf
+	//
+	template<typename ... Args>
+	std::string format( const std::string& format_str, Args ... args ) const
+	{
+		int size_s = std::snprintf( nullptr, 0, format_str.c_str(), args ... ) + 1; // Extra space for '\0'
+		if (size_s > 0){
+			auto size = static_cast<size_t>( size_s );
+			auto buf = std::make_unique<char[]>( size );
+			std::snprintf( buf.get(), size, format_str.c_str(), args ... );
+			return std::string( buf.get(), buf.get() + size - 1 ); // We don't want the '\0' inside
+			
+		}
+		return format_str ; // We take the same approach as std library, and just fail silently with
+		// best answer
+	}
+
+};
+
+//===========================================================
+// uopfile
+//===========================================================
+//===========================================================
 class uopfile {
 private:
 	static constexpr 	std::uint32_t _uop_identifer = 0x50594D;
@@ -156,20 +194,11 @@ private:
 	std::vector<std::uint64_t> _hash1 ;
 	std::vector<std::uint64_t> _hash2 ;
 	
-	/************************************************************************
-	 Hash routines
-	 ***********************************************************************/
-	static auto hashLittle2(const std::string& s) ->std::uint64_t ;
-	static auto hashAdler32(const std::vector<std::uint8_t> &data) ->std::uint32_t ;
-	auto findIndex(const std::vector<std::uint64_t> &hashdata, std::uint64_t hash) ->std::size_t;
-	
 	/****************** zlib compression wrappers *********************/
 	auto zcompress(const std::vector<std::uint8_t> &data) const ->std::vector<unsigned char>;
 	auto zdecompress(const std::vector<std::uint8_t> &source, std::size_t decompressed_size) const ->std::vector<unsigned char>;
 	
 	
-	auto buildIndexHashes(const std::string &hashformat, std::size_t max_index) ->std::vector<std::uint64_t>;
-	auto hashLittleFor(const std::string &hashstring, std::size_t index) const ->std::uint64_t;
 
 	
 protected:
